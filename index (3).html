@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arizona Roleplay — Staff Guide</title>
+<meta name="description" content="The official staff guide for Arizona Roleplay. Ranks, callsigns, Discord checking, punishments, and enforcement rules.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e14;
+    --bg-1:#0d131b;
+    --panel:#10161f;
+    --panel-2:#151d28;
+    --border:#232d3a;
+    --border-soft:#1a222d;
+    --text:#e9eff5;
+    --text-dim:#a4b2c2;
+    --text-mute:#66768a;
+    --amber:#f5a623;
+    --amber-dim:#8a691f;
+    --hot-orange:#ff5a1f;
+    --cyan:#4fc3f7;
+    --cyan-dim:#2b6a82;
+    --red:#ff5a5f;
+    --green:#3ddc84;
+    --font-display:'Space Grotesk',sans-serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'IBM Plex Mono',monospace;
+    --radius:10px;
+    --topbar-h:64px;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 600px at 85% -10%, rgba(79,195,247,0.07), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(245,166,35,0.06), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+  ul{margin:0;padding:0;list-style:none;}
+  p{margin:0 0 12px;}
+  .mono{font-family:var(--font-mono);}
+
+  .skip-link{
+    position:absolute;left:-999px;top:0;background:var(--amber);color:#0a0e14;
+    padding:10px 16px;z-index:200;border-radius:0 0 8px 0;font-weight:600;
+  }
+  .skip-link:focus{left:0;}
+
+  ::selection{background:rgba(245,166,35,0.35);color:#fff;}
+
+  /* ===== Topbar ===== */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;height:var(--topbar-h);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 20px;
+    background:rgba(10,14,20,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+    z-index:100;
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .brand-badge{
+    width:34px;height:34px;flex:none;
+    display:grid;place-items:center;
+    background:linear-gradient(160deg,var(--panel-2),var(--panel));
+    border:1px solid var(--border);border-radius:8px;
+    color:var(--amber);
+  }
+  .brand-text{display:flex;flex-direction:column;line-height:1.15;}
+  .brand-text .b1{font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:0.02em;color:var(--hot-orange);}
+  .brand-text .b2{font-family:var(--font-mono);font-size:10.5px;color:var(--text-mute);letter-spacing:0.08em;text-transform:uppercase;}
+
+  .topbar-right{display:flex;align-items:center;gap:18px;}
+  .duty-status{
+    display:flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:11px;color:var(--text-dim);
+    padding:6px 12px;border:1px solid var(--border);border-radius:999px;
+    background:rgba(255,255,255,0.015);
+  }
+  .duty-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(61,220,132,.6);animation:pulse 2.2s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(61,220,132,.55);}
+    70%{box-shadow:0 0 0 7px rgba(61,220,132,0);}
+    100%{box-shadow:0 0 0 0 rgba(61,220,132,0);}
+  }
+  #clock{color:var(--text-mute);}
+
+  .menu-toggle{
+    display:none;background:none;border:1px solid var(--border);border-radius:8px;
+    width:38px;height:38px;color:var(--text);cursor:pointer;
+  }
+  .menu-toggle span{display:block;width:16px;height:2px;background:var(--text-dim);margin:3px auto;transition:transform .2s ease, opacity .2s ease;}
+
+  /* ===== Shell / layout ===== */
+  .shell{
+    max-width:1360px;margin:0 auto;padding-top:var(--topbar-h);
+    display:grid;grid-template-columns:250px minmax(0,1fr);gap:0;
+  }
+
+  .sidenav{
+    position:sticky;top:var(--topbar-h);align-self:start;
+    height:calc(100vh - var(--topbar-h));overflow-y:auto;
+    padding:26px 14px 40px 20px;border-right:1px solid var(--border-soft);
+  }
+  .sidenav-label{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;color:var(--text-mute);
+    text-transform:uppercase;margin:0 0 10px 10px;
+  }
+  .sidenav a{
+    display:flex;align-items:center;gap:10px;
+    padding:8px 10px;border-radius:7px;text-decoration:none;
+    font-size:13px;color:var(--text-dim);border-left:2px solid transparent;
+    transition:background .15s ease,color .15s ease,border-color .15s ease;
+  }
+  .sidenav a .code{font-family:var(--font-mono);font-size:10px;color:var(--text-mute);min-width:20px;}
+  .sidenav a:hover{background:rgba(255,255,255,0.03);color:var(--text);}
+  .sidenav a.active{color:var(--amber);background:rgba(245,166,35,0.07);border-left-color:var(--amber);}
+  .sidenav a.active .code{color:var(--amber);}
+
+  main{min-width:0;padding:0 28px 100px;}
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;padding:76px 28px 56px;overflow:hidden;
+    border-bottom:1px solid var(--border-soft);
+    margin:0 0 12px;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+    background-size:42px 42px;
+    mask-image:radial-gradient(ellipse 70% 60% at 50% 0%, black 40%, transparent 100%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;max-width:760px;}
+  .eyebrow-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--amber);border:1px solid var(--amber-dim);background:rgba(245,166,35,0.06);
+    padding:6px 12px;border-radius:999px;margin-bottom:22px;
+  }
+  .eyebrow-pill svg{width:12px;height:12px;}
+  h1.hero-title{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(34px,5.4vw,58px);line-height:1.05;letter-spacing:-0.01em;
+    margin:0 0 16px;
+  }
+  h1.hero-title em{color:var(--hot-orange);font-style:normal;}
+  .hero-sub{font-size:16px;color:var(--text-dim);max-width:560px;margin-bottom:30px;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;}
+  .meta-chip{
+    font-family:var(--font-mono);font-size:11.5px;color:var(--text-dim);
+    border:1px solid var(--border);border-radius:8px;padding:8px 12px;
+    display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.015);
+  }
+  .meta-chip b{color:var(--text);font-weight:600;}
+  .meta-chip .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);}
+
+  /* ===== Section shell ===== */
+  section{padding:52px 0 8px;border-top:1px solid var(--border-soft);scroll-margin-top:calc(var(--topbar-h) + 14px);}
+  section:first-of-type{border-top:none;}
+  .panel-head{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+  .win-dots{display:flex;gap:5px;}
+  .win-dots span{width:8px;height:8px;border-radius:50%;background:var(--border);}
+  .sec-code{
+    font-family:var(--font-mono);font-size:11px;color:var(--text-mute);
+    letter-spacing:0.1em;
+  }
+  h2{
+    font-family:var(--font-display);font-weight:600;font-size:26px;
+    margin:2px 0 0;letter-spacing:-0.01em;
+  }
+  .lede{color:var(--text-dim);max-width:660px;margin-bottom:26px;font-size:15px;}
+
+  .panel{
+    background:linear-gradient(180deg,var(--panel),var(--panel-2) 140%);
+    border:1px solid var(--border);border-radius:var(--radius);
+    padding:22px 24px;margin-bottom:16px;
+  }
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* ===== Ranks ladder ===== */
+  .ladder{display:flex;flex-direction:column;gap:10px;position:relative;padding-left:6px;}
+  .rank-row{
+    display:grid;grid-template-columns:64px 1fr;gap:18px;
+    border:1px solid var(--border);border-radius:var(--radius);
+    padding:16px 18px;background:var(--panel);
+    position:relative;
+  }
+  .rank-row + .rank-row{margin-top:0;}
+  .rank-tier{font-family:var(--font-mono);font-size:10px;color:var(--text-mute);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+  .rank-tier .bar{width:4px;border-radius:2px;background:var(--border);}
+  .rank-row[data-tier="1"] .bar{height:10px;background:var(--text-mute);}
+  .rank-row[data-tier="2"] .bar{height:16px;background:var(--cyan-dim);}
+  .rank-row[data-tier="3"] .bar{height:22px;background:var(--cyan);}
+  .rank-row[data-tier="4"] .bar{height:28px;background:var(--amber-dim);}
+  .rank-row[data-tier="5"] .bar{height:34px;background:var(--amber);}
+  .rank-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;}
+  .rank-name{font-family:var(--font-display);font-weight:600;font-size:17px;}
+  .rank-row ul{display:flex;flex-direction:column;gap:5px;}
+  .rank-row li{font-size:13.5px;color:var(--text-dim);padding-left:16px;position:relative;}
+  .rank-row li::before{content:"—";position:absolute;left:0;color:var(--text-mute);}
+
+  /* ===== Promotion quotas ===== */
+  .quota-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
+  .quota-card{
+    border:1px solid var(--border);border-radius:var(--radius);background:var(--panel);
+    padding:16px 18px;
+  }
+  .quota-title{
+    font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--cyan);
+    margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border-soft);
+  }
+  .quota-card ul{display:flex;flex-direction:column;gap:8px;}
+  .quota-card li{display:flex;justify-content:space-between;align-items:center;font-size:13px;}
+  .quota-card li span{color:var(--text-mute);}
+  .quota-card li b{font-family:var(--font-mono);color:var(--text);font-weight:600;}
+
+  /* ===== Abbreviations ===== */
+  .abbr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;}
+  .abbr-item{
+    display:flex;align-items:center;gap:12px;
+    border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:var(--panel);
+  }
+  .abbr-code{
+    font-family:var(--font-mono);font-weight:600;font-size:13px;color:var(--amber);
+    background:rgba(245,166,35,0.08);border:1px solid var(--amber-dim);
+    border-radius:6px;padding:4px 8px;min-width:44px;text-align:center;
+  }
+  .abbr-name{font-size:13px;color:var(--text-dim);}
+
+  /* ===== Callsign plate ===== */
+  .callsign-wrap{display:grid;grid-template-columns:minmax(220px,280px) 1fr;gap:26px;align-items:center;}
+  .plate{
+    border:2px solid var(--amber-dim);border-radius:10px;
+    background:linear-gradient(180deg,#151004,#0d0b05);
+    padding:20px;text-align:center;position:relative;
+  }
+  .plate .tiny{font-family:var(--font-mono);font-size:10px;letter-spacing:0.15em;color:var(--amber);text-transform:uppercase;margin-bottom:10px;}
+  .plate .big{font-family:var(--font-mono);font-weight:600;font-size:38px;letter-spacing:0.06em;color:#fff;}
+  .callsign-rules li{font-size:14px;color:var(--text-dim);margin-bottom:10px;padding-left:20px;position:relative;}
+  .callsign-rules li::before{content:"▸";position:absolute;left:0;color:var(--cyan);}
+
+  /* ===== Mod calls ===== */
+  .transcript{
+    border:1px solid var(--border);border-radius:var(--radius);background:var(--panel);
+    padding:18px 20px;margin-bottom:20px;position:relative;
+  }
+  .transcript .tag{font-family:var(--font-mono);font-size:10px;color:var(--cyan);letter-spacing:0.1em;margin-bottom:8px;display:block;}
+  .transcript p{font-style:italic;color:var(--text);font-size:14.5px;margin:0;}
+  .checklist{display:flex;flex-direction:column;gap:10px;}
+  .checklist li{
+    display:flex;gap:12px;font-size:14px;color:var(--text-dim);
+    border:1px solid var(--border-soft);border-radius:8px;padding:12px 14px;background:var(--panel);
+  }
+  .checklist li svg{flex:none;width:16px;height:16px;color:var(--green);margin-top:2px;}
+
+  /* ===== Commands ===== */
+  .code-block{
+    font-family:var(--font-mono);font-size:13px;color:var(--cyan);
+    background:#080b10;border:1px solid var(--border);border-radius:8px;
+    padding:14px 16px;margin-bottom:16px;overflow-x:auto;
+  }
+  .code-block .cm{color:var(--text-mute);}
+  .warn-list li{
+    font-size:14px;color:var(--text-dim);padding:10px 14px;border-left:2px solid var(--red);
+    background:rgba(255,90,95,0.05);border-radius:0 6px 6px 0;margin-bottom:8px;
+  }
+
+  /* ===== Discord checking timeline ===== */
+  .timeline{position:relative;padding-left:30px;}
+  .timeline::before{content:"";position:absolute;left:10px;top:6px;bottom:6px;width:1px;background:var(--border);}
+  .tl-step{position:relative;padding-bottom:22px;}
+  .tl-step:last-child{padding-bottom:0;}
+  .tl-step::before{
+    content:attr(data-n);
+    position:absolute;left:-30px;top:0;width:21px;height:21px;border-radius:50%;
+    background:var(--panel-2);border:1px solid var(--amber-dim);color:var(--amber);
+    font-family:var(--font-mono);font-size:10.5px;display:grid;place-items:center;
+  }
+  .tl-step p{font-size:14px;color:var(--text-dim);margin:0;}
+  .callout{
+    display:flex;gap:12px;border:1px solid var(--cyan-dim);background:rgba(79,195,247,0.06);
+    border-radius:8px;padding:14px 16px;font-size:13.5px;color:var(--text-dim);margin-top:18px;
+  }
+  .callout svg{flex:none;width:17px;height:17px;color:var(--cyan);margin-top:1px;}
+
+  /* ===== Punishments table ===== */
+  .filter-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .filter-btn{
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:0.04em;
+    background:var(--panel);border:1px solid var(--border);color:var(--text-dim);
+    padding:7px 14px;border-radius:999px;cursor:pointer;transition:all .15s ease;
+  }
+  .filter-btn:hover{border-color:var(--text-mute);color:var(--text);}
+  .filter-btn.active{color:#0a0e14;border-color:transparent;}
+  .filter-btn[data-f="all"].active{background:var(--text);}
+  .filter-btn[data-f="Red"].active{background:var(--red);}
+  .filter-btn[data-f="Orange"].active{background:var(--amber);}
+
+  .p-table-wrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+  .p-row{
+    display:grid;grid-template-columns:1.4fr 1.6fr 1fr 90px;gap:14px;
+    padding:13px 18px;align-items:center;border-top:1px solid var(--border-soft);
+    background:var(--panel);font-size:13px;
+  }
+  .p-row.head{
+    background:var(--panel-2);font-family:var(--font-mono);font-size:10.5px;
+    text-transform:uppercase;letter-spacing:0.08em;color:var(--text-mute);border-top:none;
+  }
+  .p-row .rule{color:var(--text);font-weight:600;}
+  .p-row .dur{font-family:var(--font-mono);color:var(--text-dim);font-size:12.5px;}
+  .sev-pill{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.04em;
+    padding:4px 10px;border-radius:999px;text-align:center;width:fit-content;
+  }
+  .sev-pill.Red{background:rgba(255,90,95,0.12);color:var(--red);border:1px solid rgba(255,90,95,0.4);}
+  .sev-pill.Orange{background:rgba(245,166,35,0.12);color:var(--amber);border:1px solid rgba(245,166,35,0.4);}
+  .p-row[hidden]{display:none;}
+  .p-note{font-size:13px;color:var(--text-dim);margin-top:14px;}
+  .p-note b{color:var(--text);}
+
+  /* ===== Conduct ===== */
+  .conduct-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;}
+  .conduct-card{
+    border:1px solid var(--border);border-radius:var(--radius);background:var(--panel);
+    padding:16px 18px;display:flex;gap:12px;
+  }
+  .conduct-card svg{flex:none;width:18px;height:18px;color:var(--amber);margin-top:2px;}
+  .conduct-card p{font-size:14px;color:var(--text-dim);margin:0;}
+
+  /* ===== Appeals / closing ===== */
+  .oath{
+    border:1px solid var(--border);border-radius:var(--radius);
+    background:linear-gradient(180deg,var(--panel),#0d1219);
+    padding:26px 26px 24px;position:relative;
+  }
+  .oath::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;background:linear-gradient(180deg,var(--amber),var(--cyan));border-radius:2px;}
+  .oath p{font-size:14.5px;color:var(--text-dim);margin-bottom:12px;padding-left:18px;}
+  .oath p:last-child{margin-bottom:0;color:var(--text);}
+
+  footer{
+    border-top:1px solid var(--border-soft);padding:34px 0 60px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+  }
+  footer .fmono{font-family:var(--font-mono);font-size:11px;color:var(--text-mute);}
+
+  /* ===== Mobile ===== */
+  @media (max-width:900px){
+    .menu-toggle{display:block;}
+    .shell{grid-template-columns:1fr;}
+    .sidenav{
+      position:fixed;top:var(--topbar-h);left:0;right:0;bottom:0;height:auto;
+      background:rgba(9,12,17,0.98);backdrop-filter:blur(8px);
+      transform:translateX(-100%);transition:transform .25s ease;
+      z-index:90;border-right:none;padding:20px;
+    }
+    .sidenav.open{transform:translateX(0);}
+    main{padding:0 18px 80px;}
+    .hero{padding:52px 18px 40px;}
+    .callsign-wrap{grid-template-columns:1fr;}
+    .p-row{grid-template-columns:1fr;gap:6px;}
+    .p-row.head{display:none;}
+    .p-row span::before{content:attr(data-label) ": ";color:var(--text-mute);font-family:var(--font-mono);font-size:10px;}
+    .duty-status span#clock{display:none;}
+  }
+</style>
+</head>
+<body>
+<a href="#welcome" class="skip-link">Skip to content</a>
+
+<header class="topbar">
+  <a href="#welcome" class="brand">
+    <span class="brand-badge">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 6v6c0 5 3.8 8.7 9 10 5.2-1.3 9-5 9-10V6l-9-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    <span class="brand-text">
+      <span class="b1">ARIZONA ROLEPLAY</span>
+      <span class="b2">Staff Guide · ER:LC</span>
+    </span>
+  </a>
+  <div class="topbar-right">
+    <div class="duty-status"><span class="duty-dot"></span>DOC ACTIVE <span class="mono" id="clock" style="margin-left:6px;color:var(--text-mute);"></span></div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="sidenav" id="sidenav" aria-label="Section navigation">
+    <div class="sidenav-label">Sections</div>
+    <a href="#welcome" data-nav><span class="code">01</span>Welcome</a>
+    <a href="#ranks" data-nav><span class="code">02</span>Ranks</a>
+    <a href="#promotion" data-nav><span class="code">03</span>Promotion</a>
+    <a href="#abbreviations" data-nav><span class="code">04</span>Abbreviations</a>
+    <a href="#callsigns" data-nav><span class="code">05</span>Callsigns</a>
+    <a href="#mod-calls" data-nav><span class="code">06</span>Mod Calls</a>
+    <a href="#commands" data-nav><span class="code">07</span>Commands</a>
+    <a href="#discord-checking" data-nav><span class="code">08</span>Discord Check</a>
+    <a href="#punishments" data-nav><span class="code">09</span>Punishments</a>
+    <a href="#staff-conduct" data-nav><span class="code">10</span>Conduct</a>
+    <a href="#appeals" data-nav><span class="code">11</span>Appeals</a>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="hero-inner">
+        <span class="eyebrow-pill">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Official Staff Resource
+        </span>
+        <h1 class="hero-title">Staff Guide for <em>Arizona Roleplay</em></h1>
+        <p class="hero-sub">The single source of truth for how our staff team operates, enforces rules, and grows — on every shift, in every scene, on every call.</p>
+        <div class="hero-meta">
+          <span class="meta-chip"><span class="dot"></span>Server: <b>ER:LC</b></span>
+          <span class="meta-chip">Sections: <b>10</b></span>
+          <span class="meta-chip">Enforcement rules: <b>20</b></span>
+        </div>
+      </div>
+    </div>
+
+    <section id="welcome">
+      <div class="panel-head">
+        <div class="win-dots"><span></span><span></span><span></span></div>
+        <span class="sec-code">SEC-01 // WELCOME</span>
+      </div>
+      <h2>Welcome to the team</h2>
+      <p class="lede">This guide is the single source of truth for how staff operate, enforce rules, and grow within the server. New trainee or veteran administrator — you're expected to know it.</p>
+      <div class="panel reveal">
+        <p>Our mission is a realistic, fair, and enjoyable ER:LC experience for every player. That starts with staff who are professional, consistent, and approachable.</p>
+        <p style="margin:0;">Read this guide in full, keep it bookmarked, and ask leadership if anything is unclear.</p>
+      </div>
+    </section>
+
+    <section id="ranks">
+      <div class="panel-head">
+        <div class="win-dots"><span></span><span></span><span></span></div>
+        <span class="sec-code">SEC-02 // CHAIN OF COMMAND</span>
+      </div>
+      <h2>Ranks</h2>
+      <p class="lede">Authority and responsibility rise together. Each tier below carries more of both than the last.</p>
+      <div class="ladder">
+        <div class="rank-row reveal" data-tier="1">
+          <div class="rank-tier"><div class="bar"></div>T1</div>
+          <div>
+            <div class="rank-top"><span class="rank-name">Trainee</span></div>
+            <ul>
+              <li>Observe and learn from experienced staff</li>
+              <li>Handle basic questions and assist players</li>
+              <li>Do not issue major punishments unsupervised</li>
+            </ul>
+          </div>
+        </div>
+        <div class="rank-row reveal" data-tier="2">
+          <div class="rank-tier"><div class="bar"></div>T2</div>
+          <div>
+            <div class="rank-top"><span class="rank-name">Moderator</span></div>
+            <ul>
+              <li>Enforce server rules consistently</li>
+              <li>Issue warnings and kicks</li>
+              <li>Handle in-game player reports</li>
+            </ul>
+          </div>
+        </div>
+        <div class="rank-row reveal" data-tier="3">
+          <div class="rank-tier"><div class="bar"></div>T3</div>
+          <div>
+            <div class="rank-top"><span class="rank-name">Senior Moderator</span></div>
+            <ul>
+              <li>Oversee patrols and RP quality</li>
+              <li>Assist with escalations</li>
+              <li>Lead by example for all staff</li>
+            </ul>
+          </div>
+        </div>
+        <div class="rank-row reveal" data-tier="4">
+          <div class="rank-tier"><div class="bar"></div>T4</div>
+          <div>
+            <div class="rank-top"><span class="rank-name">Administrator</span></div>
+            <ul>
+              <li>Oversee daily operations</li>
+              <li>Manage bans, unbans, and major incidents</li>
+              <li>Assist with policy decisions</li>
+            </ul>
+          </div>
+        </div>
+        <div class="rank-row reveal" data-tier="5">
+          <div class="rank-tier"><div class="bar"></div>T5</div>
+          <div>
+            <div class="rank-top"><span class="rank-name">High Command</span></div>
+            <ul>
+              <li>Set server policy and direction</li>
+              <li>Manage staff promotions and demotions</li>
+              <li>Final say on all appeals and conflicts</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="promotion">
+      <div class="panel-head">
+        <div class="win-dots"><span></span><span></span><span></span></div>
+        <span class="sec-code">SEC-03 // ADVANCEMENT</span>
+      </div>
+      <h2>Promotion requirements</h2>
+      <p class="lede">Time on duty and quotas both count toward your next promotion — track them by rank group.</p>
+      <div class="quota-grid">
+        <div class="quota-card reveal">
+          <div class="quota-title">Moderators</div>
+          <ul>
+            <li><span>Minimum shift</span><b>1 hour</b></li>
+            <li><span>Promotion mark</span><b>2 hours</b></li>
+            <li><span>Ticket quota</span><b>None</b></li>
+            <li><span>Training quota</span><b>None</b></li>
+          </ul>
+        </div>
+        <div class="quota-card reveal">
+          <div class="quota-title">Administrators</div>
+          <ul>
+            <li><span>Minimum shift</span><b>1 hour</b></li>
+            <li><span>Promotion mark</span><b>2 hours</b></li>
+            <li><span>Ticket quota</span><b>2</b></li>
+            <li><span>Training quota</span><b>1</b></li>
+          </ul>
+        </div>
+        <div class="quota-card reveal">
+          <div class="quota-title">Internal Affairs</div>
+          <ul>
+            <li><span>Minimum shift</span><b>1 hour</b></li>
+            <li><span>Promotion mark</span><b>2 hours</b></li>
+            <li><span>Ticket quota</span><b>3</b></li>
+            <li><span>Training quota</span><b>None</b></li>
+          </ul>
+        </div>
+        <div class="quota-card reveal">
+          <div class="quota-title">Management</div>
+          <ul>
+            <li><span>Minimum shift</span><b>40 minutes</b></li>
+            <li><span>Promotion mark</span><b>1.3 hours</b></li>
+            <li><span>Ticket quota</span><b>4</b></li>
+            <li><span>Training quota</span><b>None</b></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="abbreviations">
+      <div class="panel-head">
+        <div class="win-dots"><span></span><span></span><span></span></div>
+        <span class="sec-code">SEC-04 // REFERENCE</span>
+      </div>
+      <h2>Rank abbreviations</h2>
+      <p class="lede">The short codes you'll see on rosters, in Discord, and on duty. Look up your own before your first shift.</p>
+      <div class="abbr-grid" id="abbrGrid"></div>
+    </section>
+
+    <section id="callsigns">
+      <div class="panel-head">
+        <div class="win-dots"><span></span><span></span><span></span></div>
+        <span class="sec-code">SEC-05 // IDENTIFICATION</span>
+      </div>
+      <h2>Callsigns</h2>
+      <p class="lede">When you join the staff (Sheriff) team, your callsign must follow the format RANK-CALLSIGN.</p>
+      <div class="callsign-wrap">
+        <div class="plate reveal">
+          <div class="tiny">Example format</div>
+          <div class="big">TM-251</div>
+        </div>
+        <ul class="callsign-rules reveal">
+          <li>Failure to set it correctly, or impersonating a higher rank, may result in an infraction.</li>
+          <li>Keep your callsign professional at all times.</li>
+          <li>Unsure of your abbreviation? Check the Rank Abbreviations table above.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="mod-calls">
+      <div class="panel-head">
+        <div class="win-dots"><span></span><span></span><span></span></div>
+        <span class="sec-code">SEC-06 // ON SCENE</span>
+      </div>
+      <h2>Responding to mod calls</h2>
+      <p class="lede">Have a speech ready before you respond. Something like:</p>
+      <div class="transcript reveal">
+        <span class="tag">RADIO TRANSCRIPT</span>
+        <p>"Hello, my name is [username], I am a staff member for Arizona Roleplay. How can I assist you?"</p>
+      </div>
+      <ul class="checklist">
+        <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Never ignore or void a mod call.</li>
+        <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Park your vehicle properly before responding.</li>
+        <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Once resolved, ask "Anything else?" before closing out.</li>
+        <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Witnesses and statements aren't reliable evidence on their own.</li>
+        <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Hear all sides before deciding — skipping this can lead to punishment for you.</li>
+      </ul>
+    </section>
+
+    <section id="commands">
+      <div class="panel-head">
+        <div class="win-dots"><span></span><span></span><span></span></div>
+        <span class="sec-code">SEC-07 // TOOLING</span>
+      </div>
+      <h2>Staff commands</h2>
+      <p class="lede">Available commands vary by rank and admin system. Check yours before you rely on it.</p>
+      <div class="code-block"><span class="cm"># list your available commands</span><br>:cmds</div>
+      <div class="code-block"><span class="cm"># log a punishment</span><br>:log punishment username reason<span class="cm">  → kick | warn | ban</span></div>
+      <ul class="warn-list">
+        <li>Never use a command you aren't authorised for.</li>
+        <li>Commands are for legitimate moderation or admin purposes only.</li>
+        <li>"All" / "others" / multi-player commands need high-rank permission first — misuse may mean a blacklist.</li>
+        <li>Shutdowns require sign-off from an Assistant Director or higher.</li>
+        <li>Command abuse can lead to disciplinary action.</li>
+        <li>Use at least 5 letters of a username in commands — fewer counts as LLC and may be an infraction.</li>
+      </ul>
+    </section>
+
+    <section id="discord-checking">
+      <div class="panel-head">
+        <div class="win-dots"><span></span><span></span><span></span></div>
+        <span class="sec-code">SEC-08 // PROCEDURE</span>
+      </div>
+      <h2>Discord checking</h2>
+      <p class="lede">Run at least once per shift. In the Staff Commands Channel, run <code class="mono" style="color:var(--cyan);">/erlc membercheck</code> — an X means that user isn't in the Discord.</p>
+      <div class="panel reveal">
+        <p style="margin-bottom:0;">Bring flagged users to the Springfield cinema (theater #1 or #2) and block the entrance/exit with <b style="color:var(--text);">crowd fences or barricades</b> — traffic cones don't hold.</p>
+      </div>
+      <div class="timeline">
+        <div class="tl-step reveal" data-n="1"><p>View the user to confirm they're not in a mod scene or driving.</p></div>
+        <div class="tl-step reveal" data-n="2"><p>If they're driving, private message them to pull over so their car isn't mid-road.</p></div>
+        <div class="tl-step reveal" data-n="3"><p>If they don't pull over, use <span class="mono" style="color:var(--amber);">:jail</span> — this deletes their vehicle.</p></div>
+        <div class="tl-step reveal" data-n="4"><p>Use the bring command — you may need it more than once if they're seated in a vehicle.</p></div>
+        <div class="tl-step reveal" data-n="5"><p>Once teleported, say: "Hello, you are not in the comms server. Please join it."</p></div>
+      </div>
+      <div class="callout">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.3 3.8L2.6 17a2 2 0 001.7 3h15.4a2 2 0 001.7-3L13.7 3.8a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span>Traffic cones do not block movement here — only crowd fences or barricades work for this procedure.</span>
+      </div>
+    </section>
+
+    <section id="punishments">
+      <div class="panel-head">
+        <div class="win-dots"><span></span><span></span><span></span></div>
+        <span class="sec-code">SEC-09 // ENFORCEMENT</span>
+      </div>
+      <h2>Punishments</h2>
+      <p class="lede">Every kick runs 25 minutes. Red is always unappealable; Orange is unappealable depending on severity. 12 total actions on one member means a permanent ban.</p>
+      <div class="filter-row">
+        <button class="filter-btn active" data-f="all">All rules</button>
+        <button class="filter-btn" data-f="Red">Red only</button>
+        <button class="filter-btn" data-f="Orange">Orange only</button>
+      </div>
+      <div class="p-table-wrap">
+        <div class="p-row head">
+          <span>Rule</span><span>Punishments</span><span>Duration</span><span>Severity</span>
+        </div>
+        <div id="pRows"></div>
+      </div>
+      <p class="p-note">Rows update live — try filtering to <b>Red</b> to see everything that can't be appealed.</p>
+    </section>
+
+    <section id="staff-conduct">
+      <div class="panel-head">
+        <div class="win-dots"><span></span><span></span><span></span></div>
+        <span class="sec-code">SEC-10 // STANDARDS</span>
+      </div>
+      <h2>Staff conduct</h2>
+      <p class="lede">The expectations that don't show up in a punishment table but matter just as much.</p>
+      <div class="conduct-grid">
+        <div class="conduct-card reveal"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Be respectful to all players regardless of rank or behavior.</p></div>
+        <div class="conduct-card reveal"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Stay professional in every server and Discord channel.</p></div>
+        <div class="conduct-card reveal"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Never abuse staff powers for personal roleplay or advantage.</p></div>
+        <div class="conduct-card reveal"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Enforce rules consistently and without bias.</p></div>
+        <div class="conduct-card reveal"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Never leak staff information, logs, or player data.</p></div>
+        <div class="conduct-card reveal"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Handle reports promptly — don't leave players waiting.</p></div>
+        <div class="conduct-card reveal"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Admit mistakes and correct them when they happen.</p></div>
+        <div class="conduct-card reveal"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><p>Stay in character on duty, except when actively enforcing.</p></div>
+      </div>
+    </section>
+
+    <section id="appeals">
+      <div class="panel-head">
+        <div class="win-dots"><span></span><span></span><span></span></div>
+        <span class="sec-code">SEC-11 // CLOSING</span>
+      </div>
+      <h2>Appeals</h2>
+      <p class="lede">Appeals may only be filed for punishments not marked unappealable. A Senior Moderator or higher reviews the evidence, discusses with the issuing staff member if needed, and makes the final call. Keep appeals factual and respectful.</p>
+      <div class="oath reveal">
+        <p>Staff must be familiar with this guide before taking any administrative action — ignorance of policy is never an excuse for inconsistent enforcement. When in doubt, escalate before you act.</p>
+        <p>By representing Arizona Roleplay as a staff member, you agree to uphold these standards, protect the player experience, and lead by example at all times.</p>
+      </div>
+    </section>
+
+    <footer>
+      <span class="fmono">ARIZONA ROLEPLAY // STAFF GUIDE</span>
+      <span class="fmono">ER:LC · Internal Use</span>
+    </footer>
+  </main>
+</div>
+
+<script>
+  // Clock
+  function tick(){
+    const d = new Date();
+    const el = document.getElementById('clock');
+    if(el) el.textContent = d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }
+  tick(); setInterval(tick, 1000);
+
+  // Mobile nav
+  const toggle = document.getElementById('menuToggle');
+  const sidenav = document.getElementById('sidenav');
+  toggle.addEventListener('click', () => {
+    const open = sidenav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('#sidenav a').forEach(a=>{
+    a.addEventListener('click', ()=>{ sidenav.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); });
+  });
+
+  // Scrollspy
+  const navLinks = Array.from(document.querySelectorAll('#sidenav a[data-nav]'));
+  const sections = navLinks.map(a => document.querySelector(a.getAttribute('href')));
+  const spy = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      const id = '#' + entry.target.id;
+      const link = navLinks.find(a => a.getAttribute('href') === id);
+      if(!link) return;
+      if(entry.isIntersecting){
+        navLinks.forEach(a=>a.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, {rootMargin:'-20% 0px -70% 0px', threshold:0});
+  sections.forEach(s=>{ if(s) spy.observe(s); });
+
+  // Reveal on scroll
+  const revealItems = document.querySelectorAll('.reveal');
+  const ro = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target);} });
+  }, {threshold:0.12});
+  revealItems.forEach(el=>ro.observe(el));
+
+  // Abbreviations data
+  const abbrs = [
+    ["TM","Trial Moderator"],["JM","Junior Moderator"],["SM","Senior Moderator"],
+    ["HM","Head Moderator"],["LM","Lead Moderator"],["TA","Trial Administrator"],
+    ["JA","Junior Administrator"],["SA","Senior Administrator"],["HA","Head Administrator"],
+    ["LA","Lead Administrator"],["TIA","Trial Internal Affairs"],["JIA","Junior Internal Affairs"],
+    ["SIA","Senior Internal Affairs"],["HIA","Head Internal Affairs"],["CIA","Chief Internal Affairs"],
+    ["IAS","Internal Affairs Supervisor"],["IAD","Internal Affairs Director"],["TMG","Trial Management"],
+    ["JMG","Junior Management"],["SMG","Senior Management"],["HMG","Head Management"],
+    ["LMG","Lead Management"],["HOS","Head of Staff"],["TE","Trial Executive"],
+    ["AE","Assistant Executive"],["DE","Deputy Executive"],["E","Executive"]
+  ];
+  const abbrGrid = document.getElementById('abbrGrid');
+  abbrGrid.innerHTML = abbrs.map(([code,name])=>`
+    <div class="abbr-item"><span class="abbr-code">${code}</span><span class="abbr-name">${name}</span></div>
+  `).join('');
+
+  // Punishments data
+  const rules = [
+    ["RDM/VDM","Warn (x2) → Kick → Ban","Ban → 2 days","Orange"],
+    ["Mass RDM/VDM","Ban","Ban → 2 weeks","Red"],
+    ["NLR","Warn (x2) → Kick","N/A","Orange"],
+    ["FRP","Warn (x3) → Kick → Ban","Ban → 1 day","Orange"],
+    ["NITRP (Trolling)","Kick → Ban","Ban → 1 week","Orange"],
+    ["Auto-jail","Warn → Kick → Ban","Ban → 4 days","Orange"],
+    ["LTAP","Ban","Ban → 1 month","Red"],
+    ["Tool Abuse","Warn → Kick → Ban","Ban → 2 days","Orange"],
+    ["Unrealistic Avatar","Verbal → Warn → Kick → Ban","Ban → 3 days","Orange"],
+    ["No uniform/livery","Verbal → Warn → Kick → Ban","Ban → 3 days","Orange"],
+    ["Staff RDM/VDM","Kick → Ban","Ban → 2 weeks","Red"],
+    ["Staff Evasion","Kick → Ban","Ban → 2 weeks","Red"],
+    ["Staff Impersonation","Ban","Ban → Permanent","Red"],
+    ["Staff Disrespect","Kick → Ban","Ban → 2 weeks","Red"],
+    ["Disturbing a mod scene","Load → Warn → Kick","N/A","Orange"],
+    ["Towing staff vehicles","Kick → Ban","Ban → 2 weeks","Red"],
+    ["Member Disrespect","Warn → Kick → Ban","Ban → 1 week","Orange"],
+    ["GTA Driving","Warn (x2) → Kick → Ban","Ban → 5 days","Orange"],
+    ["Cuff Rush","Warn → Kick → Ban","Ban → 2 days","Orange"],
+    ["Exploiting","Ban + PRC report + Comms ban","Ban → Permanent","Red"],
+    ["Breaking Roblox's TOS","Ban","Ban → Permanent","Red"],
+    ["Joining after kick","Ban","Ban → Permanent","Red"]
+  ];
+  const pRows = document.getElementById('pRows');
+  pRows.innerHTML = rules.map(([rule,punish,dur,sev])=>`
+    <div class="p-row" data-sev="${sev}">
+      <span class="rule" data-label="Rule">${rule}</span>
+      <span data-label="Punishments">${punish}</span>
+      <span class="dur" data-label="Duration">${dur}</span>
+      <span class="sev-pill ${sev}" data-label="Severity">${sev}</span>
+    </div>
+  `).join('');
+
+  // Filter
+  document.querySelectorAll('.filter-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.f;
+      document.querySelectorAll('#pRows .p-row').forEach(row=>{
+        row.hidden = (f !== 'all' && row.dataset.sev !== f);
+      });
+    });
+  });
+</script>
+</body>
+</html>
